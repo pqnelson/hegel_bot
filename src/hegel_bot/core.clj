@@ -7,12 +7,8 @@
 
 
 (defn -main []
-  (let [topics (trends)]
+  (let [topics (trends/load)]
     (doseq [topic topics]
       (twitter/post-status (status/generate topic :hashtag-topic)))
-    (update-old-topics topics)))
+    (trends/update topics)))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))

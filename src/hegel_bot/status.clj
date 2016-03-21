@@ -1,7 +1,8 @@
 (ns hegel-bot.status
   (:require [clojure.java.shell :refer [sh]]
             [clojure.string :as string]
-            [hegel-bot.util :as util]))
+            [hegel-bot.util :as util]
+            [hegel-bot.trends :as trends]))
 
 (def ^:const char-rnn-dir "/home/alex/src/char-rnn/")
 (def ^:const torch-bin-dir "/home/alex/torch/install/bin/")
@@ -22,7 +23,7 @@
             "sample.lua"
             hegel-bot-brain
             "-gpuid" "-1"
-            "-primetext" (str topic-string " ")
+            "-primetext" (str (trends/sanitize topic-string) " ")
             "-length" (str (- 140 (count topic-string)))
             :dir char-rnn-dir)
         :out
